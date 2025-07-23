@@ -1,0 +1,303 @@
+openapi: 3.0.4
+info:
+  title: Pedido B2B
+  version: 1.0.0
+  description: >
+    API para gerenciar pedidos.
+
+tags:
+  - name: Pedido
+    description: Operações relacionadas a pedidos
+
+paths:
+  /v1/pedido:
+    post:
+      summary: Criar um novo pedido
+      operationId: criar
+      tags:
+        - Pedido
+      requestBody:
+        description: Criar pedido
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PedidoRequest'
+      responses:
+        '201':
+          description: Criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoResponse'
+        '422':
+          description: Erro na validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno
+
+    get:
+      summary: Listar todos os pedidos
+      operationId: listar
+      tags:
+        - Pedido
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          required: false
+          description: Buscar por algum nome de pedido
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Número da página - começa com 0
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+          required: false
+          description: Número de itens por página
+        - in: query
+          name: dir
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+          required: false
+          description: Direção de ordenação
+        - in: query
+          name: sort
+          schema:
+            type: string
+          required: false
+          description: Campo para ordenação
+        - in: query
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: Identificador do pedido
+        - in: query
+          name: status
+          schema:
+            type: string
+          required: false
+          description: Status do pedido
+        - in: query
+          name: date-start
+          schema:
+            type: string
+            format: date-time
+          required: false
+          description: Data de início do período
+        - in: query
+          name: date-end
+          schema:
+            type: string
+            format: date-time
+          required: false
+          description: Data de fim do período
+      responses:
+        '200':
+          description: Listado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoPaginadoResponse'
+        '422':
+          description: Erro na validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno
+
+  /v1/pedido/{id}:
+    put:
+      summary: Atualizar status do pedido
+      operationId: atualizarStatus
+      tags:
+        - Pedido
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: Identificador do pedido
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [PENDENTE, APROVADO, EM_PROCESSAMENTO, ENVIADO, ENTREGUE, CANCELADO]
+            example: APROVADO
+          required: true
+          description: Novo status do pedido
+      responses:
+        '200':
+          description: Atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoResponse'
+        '422':
+          description: Erro na validação
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Erro interno
+
+components:
+  schemas:
+    PedidoRequest:
+      type: object
+      required:
+        - idParceiro
+        - itens
+      properties:
+        idParceiro:
+          type: integer
+          format: int64
+          example: 1
+        itens:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ItemPedido'
+
+    ItemPedido:
+      type: object
+      required:
+        - produto
+        - precoUnitario
+        - quantidade
+      description: Representa um item como parte de um pedido
+      properties:
+        produto:
+          type: string
+          example: macbook
+          description: Nome ou código de identificação do produto
+        quantidade:
+          type: integer
+          format: int64
+          default: 1
+          example: 1
+          description: Quantidade de unidades do produto
+        precoUnitario:
+          type: number
+          format: double
+          example: 1.50
+          description: Preço de uma única unidade do produto
+
+    PedidoResponse:
+      type: object
+      description: Representa a resposta completa de um pedido consultado.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador do pedido
+          example: 3cb37181-8ea4-4f24-b9a6-02fc16a7d826
+        idParceiro:
+          type: integer
+          format: int64
+          description: ID do parceiro que fez o pedido
+          example: 12345
+        itens:
+          type: array
+          description: Lista de itens que compõem o pedido
+          items:
+            $ref: '#/components/schemas/ItemResponse'
+        valorTotal:
+          type: number
+          format: double
+          description: Soma total do valor de todos os itens do pedido
+          example: 150.75
+        status:
+          type: string
+          description: O estado atual do pedido no fluxo de processamento
+          enum: [PENDENTE, APROVADO, EM_PROCESSAMENTO, ENVIADO, ENTREGUE, CANCELADO]
+          example: APROVADO
+        dataCriacao:
+          type: string
+          format: date-time
+          description: Data e hora em que o pedido foi criado (formato ISO 8601)
+          example: 2025-07-22T14:05:00.456Z
+        dataUltimaAtualizacao:
+          type: string
+          format: date-time
+          description: Data e hora da última atualização do pedido (formato ISO 8601)
+          example: 2025-07-22T14:05:00.456Z
+
+    ItemResponse:
+      type: object
+      description: Representa um item retornado em um pedido
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador do pedido
+          example: 3cb37181-8ea4-4f24-b9a6-02fc16a7d826
+        produto:
+          type: string
+          example: macbook
+          description: Nome ou código de identificação do produto
+        quantidade:
+          type: integer
+          format: int64
+          default: 1
+          example: 1
+          description: Quantidade de unidades do produto
+        precoUnitario:
+          type: number
+          format: double
+          example: 1.50
+          description: Preço de uma única unidade do produto
+        subTotal:
+          type: number
+          format: double
+          description: Soma subtotal do valor de quantidade x precoUnitario
+          example: 150.75
+
+    PedidoPaginadoResponse:
+      type: object
+      properties:
+        currentPage:
+          type: integer
+          example: 0
+        perPage:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 100
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PedidoResponse'
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Erro de validação"
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "campo X é obrigatório"
