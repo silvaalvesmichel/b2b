@@ -17,7 +17,7 @@ Este projeto é um microserviço para gerenciar pedidos, desenvolvido com Java 2
     cd nome-do-projeto
     ```
 
-2. Rode o seguinte comando para baixar as dependencias para gerar os pacotes do open api
+2. Rode o seguinte comando para baixar as dependencias e gerar os pacotes do open api
    ```sh
     mvn clean install
     ```
