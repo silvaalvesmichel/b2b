@@ -2,7 +2,7 @@ package br.com.b2b.infrastructure.pedido.mapper;
 
 import br.com.b2b.domain.model.ItemPedido;
 import br.com.b2b.domain.model.Pedido;
-import br.com.b2b.domain.model.StatusPedido;
+import br.com.b2b.domain.model.enums.StatusPedido;
 import br.com.b2b.domain.model.ValorMonetario;
 import br.com.b2b.infrastructure.commons.Pagination;
 import br.com.b2b.infrastructure.openapi.pedido.model.ItemResponse;

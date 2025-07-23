@@ -1,7 +1,7 @@
 package br.com.b2b.infrastructure.pedido.entity;
 
 import br.com.b2b.domain.model.Pedido;
-import br.com.b2b.domain.model.StatusPedido;
+import br.com.b2b.domain.model.enums.StatusPedido;
 import br.com.b2b.infrastructure.pedido.mapper.PedidoEntityMapper;
 import jakarta.persistence.*;
 import lombok.*;

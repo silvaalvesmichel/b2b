@@ -1,11 +1,10 @@
-package br.com.b2b.infrastructure.pedido;
+package br.com.b2b.infrastructure.pedido.repository;
 
 import br.com.b2b.application.port.out.PedidoRepositoryPort;
 import br.com.b2b.domain.model.Pedido;
-import br.com.b2b.domain.model.StatusPedido;
+import br.com.b2b.domain.model.enums.StatusPedido;
 import br.com.b2b.infrastructure.commons.Pagination;
 import br.com.b2b.infrastructure.pedido.entity.PedidoEntity;
-import br.com.b2b.infrastructure.pedido.repository.PedidoRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

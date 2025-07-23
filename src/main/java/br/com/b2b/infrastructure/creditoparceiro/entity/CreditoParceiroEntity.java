@@ -29,6 +29,12 @@ public class CreditoParceiroEntity {
     @Column(nullable = false)
     private BigDecimal credito;
 
+    public CreditoParceiroEntity(UUID id, Long idParceiro, BigDecimal credito) {
+        this.id = id;
+        this.idParceiro = idParceiro;
+        this.credito = credito;
+    }
+
     public static CreditoParceiroEntity from(final CreditoParceiro creditoParceiro){
         return CreditoParceiroEntityMapper.INSTANCE.toEntity(creditoParceiro);
     }

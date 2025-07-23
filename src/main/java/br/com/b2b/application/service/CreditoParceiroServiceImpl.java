@@ -1,7 +1,7 @@
 package br.com.b2b.application.service;
 
 import br.com.b2b.application.port.in.CreditoParceiroUseCase;
-import br.com.b2b.application.port.out.ParceiroCreditoPort;
+import br.com.b2b.application.port.out.ParceiroCreditoRepositoryPort;
 import br.com.b2b.domain.exception.DomainException;
 import br.com.b2b.domain.model.CreditoParceiro;
 import lombok.RequiredArgsConstructor;
@@ -14,15 +14,15 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class CreditoParceiroServiceImpl implements CreditoParceiroUseCase {
 
-  private final ParceiroCreditoPort parceiroCreditoPort;
+  private final ParceiroCreditoRepositoryPort parceiroCreditoRepositoryPort;
 
     @Override
     public CreditoParceiro criarCreditoParceiro(Long idParceiro, BigDecimal credito) {
-        CreditoParceiro creditoParceiroExist = parceiroCreditoPort.buscarPorIdParceiro(idParceiro);
+        CreditoParceiro creditoParceiroExist = parceiroCreditoRepositoryPort.buscarPorIdParceiro(idParceiro);
         if(Objects.nonNull(creditoParceiroExist)) {
           throw new DomainException("Parceiro já cadastrado");
         }
         CreditoParceiro creditoParceiro = CreditoParceiro.newCreditoParceiro(idParceiro, credito);
-        return parceiroCreditoPort.criarParceiroCredito(creditoParceiro);
+        return parceiroCreditoRepositoryPort.criarParceiroCredito(creditoParceiro);
     }
 }

@@ -1,4 +1,4 @@
-package br.com.b2b.domain.model;
+package br.com.b2b.domain.model.enums;
 
 public enum StatusPedido {
     PENDENTE,

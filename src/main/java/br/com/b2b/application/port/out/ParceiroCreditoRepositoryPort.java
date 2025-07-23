@@ -4,7 +4,7 @@ import br.com.b2b.domain.model.CreditoParceiro;
 
 import java.math.BigDecimal;
 
-public interface ParceiroCreditoPort {
+public interface ParceiroCreditoRepositoryPort {
 
     boolean verificarCredito(Long idParceiro, BigDecimal valorPedido);
 

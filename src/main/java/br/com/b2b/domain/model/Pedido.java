@@ -1,6 +1,7 @@
 package br.com.b2b.domain.model;
 
 import br.com.b2b.domain.exception.DomainException;
+import br.com.b2b.domain.model.enums.StatusPedido;
 import lombok.Builder;
 import lombok.Getter;
 

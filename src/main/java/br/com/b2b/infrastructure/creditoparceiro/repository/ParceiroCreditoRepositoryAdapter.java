@@ -1,10 +1,9 @@
-package br.com.b2b.infrastructure.creditoparceiro;
+package br.com.b2b.infrastructure.creditoparceiro.repository;
 
-import br.com.b2b.application.port.out.ParceiroCreditoPort;
+import br.com.b2b.application.port.out.ParceiroCreditoRepositoryPort;
 import br.com.b2b.domain.model.CreditoParceiro;
 import br.com.b2b.infrastructure.commons.exeception.InfrastructureException;
 import br.com.b2b.infrastructure.creditoparceiro.entity.CreditoParceiroEntity;
-import br.com.b2b.infrastructure.creditoparceiro.repository.CreditoParceiroRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,7 +14,7 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ParceiroCreditoAdapter implements ParceiroCreditoPort {
+public class ParceiroCreditoRepositoryAdapter implements ParceiroCreditoRepositoryPort {
 
     private final CreditoParceiroRepository repository;
 
