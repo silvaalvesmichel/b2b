@@ -17,12 +17,17 @@ Este projeto é um microserviço para gerenciar pedidos, desenvolvido com Java 2
     cd nome-do-projeto
     ```
 
-2.  Suba os containers da aplicação e do banco de dados com Docker Compose:
+2. Rode o seguinte comando para baixar as dependencias para gerar os pacotes do open api
+   ```sh
+    mvn clean install
+    ```
+
+3.  Suba os containers da aplicação e do banco de dados com Docker Compose:
     ```sh
     docker-compose up --build
     ```
     
-   3. e rode os seguintes comandos para criar topico e fila
+   4. e rode os seguintes comandos para criar topico e fila
        ```sh
        docker exec -it localstack bash
        ```
